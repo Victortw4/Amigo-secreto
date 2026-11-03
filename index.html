@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Amigo Secreto</title>
+
+    <link rel="icon" href="imagens/favicon.ico" />
+    <link rel="stylesheet" href="Styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🎄 Amigo Secreto 🎁</h1>
+    </header>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Gerenciamento de grupos">
+        <div class="sidebar-header">
+          <h2>Grupos</h2>
+          <button id="novoGrupo" type="button" class="botao-ghost">
+            + Novo grupo
+          </button>
+        </div>
+
+        <form id="formGrupo" class="form-grupo" novalidate>
+          <label for="nomeGrupo">Nome do grupo</label>
+          <input
+            id="nomeGrupo"
+            type="text"
+            maxlength="60"
+            placeholder="Ex.: Família"
+          />
+          <p id="erroGrupo" class="erro-grupo" aria-live="polite"></p>
+          <div class="grupo-acoes">
+            <button id="salvarGrupo" type="submit">Criar grupo</button>
+            <button
+              id="cancelarGrupo"
+              type="button"
+              class="botao-secundario"
+              hidden
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+
+        <ul id="listaGrupos" class="lista-grupos" aria-live="polite"></ul>
+        <section id="cadastro">
+          <div class="cabecalho-cadastro">
+            <h2>Participantes</h2>
+            <div class="grupo-ativo" aria-live="polite">
+              <span>Grupo atual</span>
+              <strong id="nomeGrupoAtivo">Nenhum grupo</strong>
+            </div>
+          </div>
+
+          <p id="contador">0 participantes cadastrados</p>
+
+          <div class="form-participante">
+            <label for="participante">Nome</label>
+            <input
+              type="text"
+              id="participante"
+              maxlength="100"
+              placeholder="Digite o nome..."
+              autocomplete="name"
+              required
+            />
+            <label for="emailParticipante">E-mail (opcional)</label>
+            <input
+              type="email"
+              id="emailParticipante"
+              maxlength="254"
+              placeholder="nome@exemplo.com"
+              autocomplete="email"
+            />
+            <button id="adicionar" type="button">+ Adicionar participante</button>
+            <p id="erroParticipante" class="erro-grupo" aria-live="polite"></p>
+          </div>
+
+          <div class="imagem-grupo">
+            <label for="imagemFundo">Imagem de fundo do grupo</label>
+            <div class="seletor-imagem">
+              <label for="imagemFundo" class="botao-selecionar-imagem">
+                Escolher imagem
+              </label>
+              <input
+                id="imagemFundo"
+                type="file"
+                accept="image/*"
+                aria-describedby="statusImagem"
+              />
+              <span
+                id="statusImagem"
+                class="status-imagem"
+                role="status"
+                aria-live="polite"
+                title="Nenhuma imagem selecionada"
+              >
+                Nenhuma imagem selecionada
+              </span>
+            </div>
+            <button id="removerImagem" type="button" class="botao-secundario">
+              Remover imagem
+            </button>
+          </div>
+
+          <ul id="listaParticipantes"></ul>
+        </section>
+      </aside>
+
+      <main class="conteudo-principal">
+        <section id="roleta">
+          <h2>Sorteio e e-mails</h2>
+          <p id="mensagem-sorteio">
+            Cada giro avança uma etapa sem revelar a atribuição. O navegador prepara
+            rascunhos, mas não envia e-mails nem confirma a entrega.
+          </p>
+          <div id="palcoRoleta" class="roleta-palco">
+            <span class="roleta-ponteiro" aria-hidden="true"></span>
+            <canvas
+              id="roletaCanvas"
+              width="720"
+              height="720"
+              role="img"
+              aria-label="Roleta de participantes"
+            >
+              A roleta mostra os participantes deste grupo.
+            </canvas>
+          </div>
+          <p id="statusRoleta" role="status" aria-live="polite"></p>
+          <p id="progressoSorteio" role="status" aria-live="polite">
+            Adicione participantes para iniciar o sorteio.
+          </p>
+          <button id="sortear" type="button">Sortear</button>
+          <p id="resumoNotificacoes" role="status" aria-live="polite"></p>
+          <div id="emailsPreparados" hidden>
+            <p>
+              Prepare o rascunho individual desta etapa. A página não mostra
+              quem foi sorteado. Revise e envie manualmente; se o aplicativo
+              não abrir, copie a mensagem.
+            </p>
+            <ul id="listaEmailsPreparados" aria-label="E-mails individuais"></ul>
+            <div id="fallbackEmail" hidden>
+              <label for="textoFallbackEmail">
+                Mensagem para copiar manualmente
+              </label>
+              <textarea id="textoFallbackEmail" readonly></textarea>
+            </div>
+          </div>
+          <p class="aviso-privacidade">
+            Os resultados ficam no armazenamento deste navegador. Não há
+            autenticação: pessoas com acesso a este navegador ou às ferramentas
+            de desenvolvedor podem vê-los.
+          </p>
+        </section>
+      </main>
+    </div>
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+    <script src="Client.js" defer></script>
+  </body>
+</html>
